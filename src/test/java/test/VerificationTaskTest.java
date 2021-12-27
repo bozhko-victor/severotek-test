@@ -1,24 +1,16 @@
-package severotek.tests;
+package test;
 
 import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.logevents.SelenideLogger;
 import com.github.javafaker.Faker;
 import config.CredentialsConfig;
-import io.qameta.allure.selenide.AllureSelenide;
 import org.aeonbits.owner.ConfigFactory;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.Selenide.open;
 
-public class TestItem {
-
-
-    @BeforeAll
-    static void beforeAll() {
-        SelenideLogger.addListener("allure", new AllureSelenide());
-    }
+public class VerificationTaskTest extends TestBase {
 
     public CredentialsConfig credentials =
             ConfigFactory.create(CredentialsConfig.class);
