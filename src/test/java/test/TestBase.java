@@ -1,13 +1,18 @@
 package test;
 
-import com.codeborne.selenide.logevents.SelenideLogger;
-import io.qameta.allure.selenide.AllureSelenide;
-import org.junit.jupiter.api.BeforeAll;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeTest;
 
 public class TestBase {
 
-    @BeforeAll
-    static void beforeAll() {
-        SelenideLogger.addListener("allure", new AllureSelenide());
+
+    @BeforeTest
+    static void setup() {
+
+    }
+
+    @AfterTest
+    static void close() {
+
     }
 }

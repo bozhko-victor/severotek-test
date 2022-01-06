@@ -1,6 +1,6 @@
 package test;
 
-import org.junit.jupiter.api.Test;
+import org.testng.annotations.Test;
 import page.AdminPage;
 
 public class VerificationTaskWithPageObjectTest extends TestBase {

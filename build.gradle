@@ -15,19 +15,20 @@ allure {
     aspectjVersion = "1.9.6"
     configuration = "testImplementation"
 
-    useJUnit5 {
-        version = "2.15.0"
+    useTestNG() {
+        version = "2.17.2"
     }
 }
 
 dependencies {
     testImplementation (
-            'org.junit.jupiter:junit-jupiter:5.8.2',
+            'org.testng:testng:7.4.0',
             'com.github.javafaker:javafaker:1.0.2',
             'io.qameta.allure:allure-selenide:2.17.2',
             'org.aeonbits.owner:owner:1.0.12',
-            'com.codeborne:selenide:6.1.1')
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+            'org.seleniumhq.selenium:selenium-java:4.1.1',
+            'io.github.bonigarcia:webdrivermanager:5.0.3',
+            'com.codeborne:selenide:6.1.2')
 }
 
 tasks.withType(JavaCompile) {
@@ -37,10 +38,10 @@ tasks.withType(JavaCompile) {
 }
 
 test {
-    useJUnitPlatform()
+    useTestNG()
 }
 
 tasks.withType(Test) {
     systemProperties(System.getProperties())
-    useJUnitPlatform()
+    useTestNG()
 }

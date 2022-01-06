@@ -1,90 +1,98 @@
 package page;
 
-import com.codeborne.selenide.Condition;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
 import static test.TestData.*;
 
 public class AdminPage {
 
+    WebDriver driver = new ChromeDriver();
+
     public AdminPage openAdminPage() {
-        open("https://igorakintev.ru/admin/");
+        driver.get("https://igorakintev.ru/admin/");
         return this;
     }
 
     public AdminPage setLogin() {
-        $("#id_username").setValue(credentials.login());
+        driver.findElement(By.xpath("//*[@id='id_username']")).sendKeys(credentials.login());
         return this;
     }
 
     public AdminPage setPassword() {
-        $("#id_password").setValue(credentials.password());
+        driver.findElement(By.xpath("//*[@id='id_password']")).sendKeys(credentials.password());
         return this;
     }
 
     public AdminPage pressEnter() {
-        $("input[type=submit]").click();
+        driver.findElement(By.xpath("//input[@type='submit']")).click();
         return this;
     }
 
     public AdminPage checkTitleIsVisible() {
-        $(".dashboard-title").shouldHave(Condition.text("Панель управления"));
+        WebElement dashboard = driver.findElement(By.xpath("//*[@id='content']/h1"));
+        Assert.assertEquals(dashboard.getText(), "Панель управления");
         return this;
     }
 
     public AdminPage pressBtnPlusEntries() {
-        $("li [href='/admin/blog/entry/add/'").click();
+        driver.findElement(By.xpath("//a[@href='/admin/blog/entry/add/']//span[contains(text(),'Добавить')]")).click();
         return this;
     }
 
     public AdminPage checkTextBlockEntryIsPresent() {
-        $("#content").shouldHave(Condition.text("Добавить entry"));
+        WebElement headline = driver.findElement(By.xpath("//h1[contains(text(),'Добавить entry')]"));
+        Assert.assertEquals(headline.getText(), "Добавить entry");
         return this;
     }
 
     public AdminPage setTitle() {
-        $("#id_title").setValue(title);
+        driver.findElement(By.xpath("//input[@id='id_title']")).sendKeys(title);
         return this;
     }
 
     public AdminPage setSlug() {
-        $("#id_slug").setValue(slug);
+        driver.findElement(By.xpath("//input[@id='id_slug']")).sendKeys(slug);
         return this;
     }
 
     public AdminPage setMarkdownArea() {
-        $("#id_text_markdown").setValue(markdown);
+        driver.findElement(By.xpath("//textarea[@id='id_text_markdown']")).sendKeys(markdown);
         return this;
     }
 
     public AdminPage setTextArea() {
-        $("#id_text").setValue(text);
+        driver.findElement(By.xpath("//textarea[@id='id_text']")).sendKeys(text);
         return this;
     }
 
     public AdminPage pressBtnSave() {
-        $("input.default").click();
+        driver.findElement(By.xpath("//input[@name='_save']")).click();
         return this;
     }
 
     public AdminPage openBlogPage() {
-        open("https://igorakintev.ru/blog/");
+        driver.get("https://igorakintev.ru/blog/");
         return this;
     }
 
     public AdminPage checkNewArticleIsPresent() {
-        $("#entries").shouldHave(Condition.text(title));
+        WebElement article = driver.findElement(By.xpath("//*[@id='entries']/h2[1]/a"));
+        Assert.assertEquals(article.getText(), title);
         return this;
     }
 
     public void deleteNewArticle() {
-        open("https://igorakintev.ru/admin/blog/entry/");
-        $(By.xpath("//*[@id='result_list']/tbody/tr[1]/td[1]/input")).click();
-        $(By.xpath("//select")).click();
-        $(By.xpath("//option[@value='delete_selected']")).click();
-        $(By.xpath("//button[(text()='Выполнить')]")).click();
-        $(By.xpath("//input[@value='Да, я уверен']")).click();
+        driver.get("https://igorakintev.ru/admin/blog/entry/");
+        driver.findElement(By.xpath("//*[@id='result_list']/tbody/tr[1]/td[1]/input")).click();
+        driver.findElement(By.xpath("//select")).click();
+        driver.findElement(By.xpath("//option[@value='delete_selected']")).click();
+        driver.findElement(By.xpath("//button[(text()='Выполнить')]")).click();
+        driver.findElement(By.xpath("//input[@value='Да, я уверен']")).click();
+        driver.close();
+
     }
 }
