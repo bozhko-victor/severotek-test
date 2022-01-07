@@ -44,7 +44,7 @@ public class AdminPage {
     }
 
     public AdminPage checkTextBlockEntryIsPresent() {
-        WebElement headline = driver.findElement(By.xpath("//*[@id='content']/h1")); // //*[@id="content"]/h1 vs //h1[contains(text(),'Добавить entry')]
+        WebElement headline = driver.findElement(By.xpath("//*[@id='content']/h1"));
         Assert.assertEquals(headline.getText(), "Добавить entry");
         return this;
     }
