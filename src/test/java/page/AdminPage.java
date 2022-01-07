@@ -1,6 +1,7 @@
 package page;
 
 import com.codeborne.selenide.Condition;
+import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.By;
 
 import static com.codeborne.selenide.Selenide.$;
@@ -9,63 +10,80 @@ import static test.TestData.*;
 
 public class AdminPage {
 
+    private final String DASHBOARD_TITLE = "Панель управления";
+    private final String BLOCK_TITLE = "Добавить entry";
+
+    private SelenideElement
+            usernameField = $("#id_username"),
+            passwordField = $("#id_password"),
+            submitBtn = $("input[type=submit]"),
+            btnPlusEntries =  $("li [href='/admin/blog/entry/add/'"),
+            dashboardTitle = $(".dashboard-title"),
+            textBlockEntry =  $("#content"),
+            inputTitle = $("#id_title"),
+            inputSlug =  $("#id_slug"),
+            inputMarkdownArea = $("#id_text_markdown"),
+            inputTextArea =  $("#id_text"),
+            btnSave = $("input.default"),
+            firstArticle = $("#entries");
+
     public AdminPage openAdminPage() {
         open("https://igorakintev.ru/admin/");
         return this;
     }
 
     public AdminPage setLogin() {
-        $("#id_username").setValue(credentials.login());
+        usernameField.setValue(credentials.login());
         return this;
     }
 
     public AdminPage setPassword() {
-        $("#id_password").setValue(credentials.password());
+        passwordField.setValue(credentials.password());
         return this;
     }
 
     public AdminPage pressEnter() {
-        $("input[type=submit]").click();
+        submitBtn.click();
         return this;
     }
 
     public AdminPage checkTitleIsVisible() {
-        $(".dashboard-title").shouldHave(Condition.text("Панель управления"));
+        dashboardTitle.shouldHave(Condition.text(DASHBOARD_TITLE));
         return this;
     }
 
     public AdminPage pressBtnPlusEntries() {
-        $("li [href='/admin/blog/entry/add/'").click();
+        btnPlusEntries.click();
         return this;
     }
 
     public AdminPage checkTextBlockEntryIsPresent() {
-        $("#content").shouldHave(Condition.text("Добавить entry"));
+        textBlockEntry.shouldHave(Condition.text(BLOCK_TITLE));
         return this;
     }
 
     public AdminPage setTitle() {
-        $("#id_title").setValue(title);
+        inputTitle.setValue(title);
         return this;
     }
 
     public AdminPage setSlug() {
-        $("#id_slug").setValue(slug);
+        inputSlug.setValue(slug);
         return this;
     }
 
     public AdminPage setMarkdownArea() {
-        $("#id_text_markdown").setValue(markdown);
+        inputMarkdownArea.setValue(markdown);
         return this;
     }
 
     public AdminPage setTextArea() {
-        $("#id_text").setValue(text);
+        inputTextArea.setValue(text);
         return this;
     }
 
     public AdminPage pressBtnSave() {
-        $("input.default").click();
+        btnSave.click();
         return this;
     }
 
@@ -75,7 +93,7 @@ public class AdminPage {
     }
 
     public AdminPage checkNewArticleIsPresent() {
-        $("#entries").shouldHave(Condition.text(title));
+        firstArticle.shouldHave(Condition.text(title));
         return this;
     }
 
